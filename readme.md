@@ -117,6 +117,9 @@ A Django REST API backend for a journal article publishing system. Provides user
 ## License
 MIT — see LICENSE file.
 
+## Demo Link
+https://mejhpgs.netlify.app
+
 ## Contact / Maintainers
 - Project maintainers: chuks@ugtf.org
 
