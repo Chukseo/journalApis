@@ -23,7 +23,7 @@ A Django REST API backend for a journal article publishing system. Provides user
 
 1. Clone and open project
     ```bash
-    git clone https://github.com/Chukseo/journalBack
+    git clone https://github.com/Chukseo/journalApis
     ```
 
 2. Create virtual environment and install
