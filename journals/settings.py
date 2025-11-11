@@ -54,6 +54,9 @@ TEMPLATES = [
     },
 ]
 
+
+ALLOWED_HOSTS = ["*"]   
+
 WSGI_APPLICATION = "journals.wsgi.application"
 ASGI_APPLICATION = "journals.asgi.application"
 
