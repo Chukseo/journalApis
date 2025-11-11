@@ -3,17 +3,6 @@ from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
 
-from django.contrib.auth import get_user_model
-
-def create_superuser():
-    User = get_user_model()
-    username = os.getenv("DJANGO_SUPERUSER_USERNAME", "admin")
-    email = os.getenv("DJANGO_SUPERUSER_EMAIL", "chukseo@gmail.com")
-    password = os.getenv("DJANGO_SUPERUSER_PASSWORD", "Brownweb87")
-
-    if not User.objects.filter(username=username).exists():
-        User.objects.create_superuser(username=username, email=email, password=password)
-
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
