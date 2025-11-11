@@ -55,7 +55,7 @@ TEMPLATES = [
 ]
 
 
-ALLOWED_HOSTS = ["*"]   
+ALLOWED_HOSTS = ['https://journalapis-p8bu.onrender.com/', 'https://journalapis-p8bu.onrender.com/admin', '127.0.0.1', 'localhost']   
 
 WSGI_APPLICATION = "journals.wsgi.application"
 ASGI_APPLICATION = "journals.asgi.application"
