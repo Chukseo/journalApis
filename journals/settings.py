@@ -3,16 +3,16 @@ from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
 
-from django.contrib.auth import get_user_model
+# from django.contrib.auth import get_user_model
 
-def create_superuser():
-    User = get_user_model()
-    username = os.getenv("DJANGO_SUPERUSER_USERNAME", "admin")
-    email = os.getenv("DJANGO_SUPERUSER_EMAIL", "chukseo@gmail.com")
-    password = os.getenv("DJANGO_SUPERUSER_PASSWORD", "Brownweb87")
+# def create_superuser():
+#     User = get_user_model()
+#     username = os.getenv("DJANGO_SUPERUSER_USERNAME", "admin")
+#     email = os.getenv("DJANGO_SUPERUSER_EMAIL", "chukseo@gmail.com")
+#     password = os.getenv("DJANGO_SUPERUSER_PASSWORD", "Brownweb87")
 
-    if not User.objects.filter(username=username).exists():
-        User.objects.create_superuser(username=username, email=email, password=password)
+#     if not User.objects.filter(username=username).exists():
+#         User.objects.create_superuser(username=username, email=email, password=password)
 
 load_dotenv()
 
@@ -75,31 +75,31 @@ ASGI_APPLICATION = "journals.asgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Database (PostgreSQL via DATABASE_URL or individual env vars)
-DATABASE_URL = os.getenv("postgresql://postgredb1_x8d4_user:SMfTsJ6rPDki7Tg2Wzze8RIdRu4ANhUD@dpg-d49h51hr0fns738ih6r0-a/postgredb1_x8d4")
-if DATABASE_URL:
-    DATABASES = {
-        "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
-    }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": os.getenv("POSTGRES_DB", "postgredb1_x8d4"),
-            "USER": os.getenv("POSTGRES_USER", "postgredb1_x8d4_user"),
-            "PASSWORD": os.getenv("POSTGRES_PASSWORD", "SMfTsJ6rPDki7Tg2Wzze8RIdRu4ANhUD"),
-            "HOST": os.getenv("POSTGRES_HOST", "dpg-d49h51hr0fns738ih6r0-a"),
-            "PORT": os.getenv("POSTGRES_PORT", "5432"),
-        }
-    }
+# DATABASE_URL = os.getenv("postgresql://postgredb1_x8d4_user:SMfTsJ6rPDki7Tg2Wzze8RIdRu4ANhUD@dpg-d49h51hr0fns738ih6r0-a/postgredb1_x8d4")
+# if DATABASE_URL:
+#     DATABASES = {
+#         "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
+#     }
+# else:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.postgresql",
+#             "NAME": os.getenv("POSTGRES_DB", "postgredb1_x8d4"),
+#             "USER": os.getenv("POSTGRES_USER", "postgredb1_x8d4_user"),
+#             "PASSWORD": os.getenv("POSTGRES_PASSWORD", "SMfTsJ6rPDki7Tg2Wzze8RIdRu4ANhUD"),
+#             "HOST": os.getenv("POSTGRES_HOST", "dpg-d49h51hr0fns738ih6r0-a"),
+#             "PORT": os.getenv("POSTGRES_PORT", "5432"),
+#         }
+#     }
 
 # Static files
 STATIC_URL = "/static/"
