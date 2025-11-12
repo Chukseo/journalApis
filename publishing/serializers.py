@@ -19,7 +19,7 @@ class ArticleSerializer(serializers.ModelSerializer):
             "title",
             "abstract",
             "keywords",
-            "pdf_url",
+            "pdf_file",
             "authors",
             "issue",
         ]
@@ -67,7 +67,7 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
             "title",
             "abstract",
             "keywords",
-            "pdf_url",
+            "pdf_file",
             "authors",
             "issue",
             "created_at",
