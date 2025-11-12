@@ -9,7 +9,8 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     authors = AuthorSerializer(many=True, read_only=True)
-    pdf_url = serializers.SerializerMethodField()
+    pdf_url = serializers.URLField(source="pdf_file")
+
 
     class Meta:
         model = Article
