@@ -52,7 +52,8 @@ class Article(TimeStampedModel):
     title = models.CharField(max_length=255)
     abstract = models.TextField()
     keywords = models.CharField(max_length=512, help_text="Comma-separated keywords")
-    pdf_file = models.FileField(upload_to="articles/")
+    # pdf_file = models.FileField(upload_to="articles/")
+    pdf_file = models.URLField(max_length=1024, blank=True, help_text="URL to the PDF file")
     authors = models.ManyToManyField(Author, related_name="articles")
 
     class Meta:
