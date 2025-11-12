@@ -9,7 +9,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     authors = AuthorSerializer(many=True, read_only=True)
-    pdf_url = serializers.SerializerMethodField()
+    pdf_file = serializers.SerializerMethodField()
 
     class Meta:
         model = Article
@@ -18,12 +18,12 @@ class ArticleSerializer(serializers.ModelSerializer):
             "title",
             "abstract",
             "keywords",
-            "pdf_url",
+            "pdf_file",
             "authors",
             "issue",
         ]
 
-    def get_pdf_url(self, obj):
+    def get_pdf_file(self, obj):
         request = self.context.get("request")
         if obj.pdf_file and hasattr(obj.pdf_file, "url"):
             return request.build_absolute_uri(obj.pdf_file.url) if request else obj.pdf_file.url
@@ -56,7 +56,7 @@ class JournalSerializer(serializers.ModelSerializer):
 
 class ArticleDetailSerializer(serializers.ModelSerializer):
     authors = AuthorSerializer(many=True, read_only=True)
-    pdf_url = serializers.SerializerMethodField()
+    pdf_file = serializers.SerializerMethodField()
     issue = IssueSerializer(read_only=True)
 
     class Meta:
@@ -66,7 +66,7 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
             "title",
             "abstract",
             "keywords",
-            "pdf_url",
+            "pdf_file",
             "authors",
             "issue",
             "created_at",
@@ -99,7 +99,7 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
                 return None
             
             
-    def get_pdf_url(self, obj):
+    def get_pdf_file(self, obj):
         request = self.context.get("request")
         if obj.pdf_file and hasattr(obj.pdf_file, "url"):
             return request.build_absolute_uri(obj.pdf_file.url) if request else obj.pdf_file.url
