@@ -5,6 +5,8 @@ import dj_database_url
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         User = get_user_model()
@@ -113,7 +115,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media files (use an object storage in production for durability)
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Timezone/Localization
 LANGUAGE_CODE = "en-us"
