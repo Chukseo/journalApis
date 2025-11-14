@@ -1,4 +1,9 @@
+import os
 from django.db import models
+
+
+def upload_with_original_name(instance, filename):
+    return os.path.join("issues", filename)
 
 # Create your models here.
 class TimeStampedModel(models.Model):
@@ -23,7 +28,7 @@ class Journal(TimeStampedModel):
 class Issue(TimeStampedModel):
     journal = models.ForeignKey(Journal, on_delete=models.CASCADE, related_name="issues")
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="issues/", blank=True, null=True)
+    image = models.ImageField(upload_to=upload_with_original_name, blank=True, null=True)
     year = models.PositiveIntegerField()
 
     class Meta:
