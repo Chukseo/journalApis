@@ -113,7 +113,6 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Media files (use an object storage in production for durability)
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -144,6 +143,9 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4000",
     "https://mejhpgs.netlify.app",
+    "https://juvejournalimsu.netlify.app",
+    "https://odeeokaaimsu.netlify.app",
+    "https://kpakpandoimsu.netlify.app",
 ]
 
 
