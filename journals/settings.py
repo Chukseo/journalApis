@@ -146,6 +146,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://juvejournalimsu.netlify.app",
     "https://odeeokaaimsu.netlify.app",
     "https://kpakpandoimsu.netlify.app",
+    "https://ugtfjournal.netlify.app/",
 ]
 
 
