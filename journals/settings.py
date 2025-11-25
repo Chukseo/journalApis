@@ -142,6 +142,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4000",
+    "http://localhost:5173",
     "https://mejhpgs.netlify.app",
     "https://juvejournalimsu.netlify.app",
     "https://odeeokaaimsu.netlify.app",
