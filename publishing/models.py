@@ -1,4 +1,19 @@
+import os
 from django.db import models
+from django.core.files.storage import FileSystemStorage
+
+
+
+class OverwriteStorage(FileSystemStorage):
+    def get_available_name(self, name, max_length=None):
+        # If the file exists, delete it so we can keep the same name
+        if self.exists(name):
+            self.delete(name)
+        return name
+
+def upload_with_original_name(instance, filename):
+    # Keep original filename inside "issues/"
+    return os.path.join("issues", filename)
 
 # Create your models here.
 class TimeStampedModel(models.Model):
@@ -23,7 +38,7 @@ class Journal(TimeStampedModel):
 class Issue(TimeStampedModel):
     journal = models.ForeignKey(Journal, on_delete=models.CASCADE, related_name="issues")
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="issues/", blank=True, null=True)
+    image = models.ImageField(upload_to=upload_with_original_name, storage=OverwriteStorage(), blank=True, null=True)
     year = models.PositiveIntegerField()
 
     class Meta:
@@ -52,7 +67,9 @@ class Article(TimeStampedModel):
     title = models.CharField(max_length=255)
     abstract = models.TextField()
     keywords = models.CharField(max_length=512, help_text="Comma-separated keywords")
-    pdf_file = models.FileField(upload_to="articles/")
+    # pdf_file = models.FileField(upload_to="articles/")
+    # pdf_url = models.URLField(max_length=1024, blank=True, help_text="URL to the PDF file")
+    pdf_file = models.CharField(max_length=1024, blank=True, help_text="URL to the PDF file")
     authors = models.ManyToManyField(Author, related_name="articles")
 
     class Meta:

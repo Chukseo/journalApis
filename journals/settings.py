@@ -2,6 +2,24 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
+from django.core.management.base import BaseCommand
+from django.contrib.auth import get_user_model
+
+# BASE_DIR = Path(__file__).resolve().parent.parent
+
+class Command(BaseCommand):
+    def handle(self, *args, **options):
+        User = get_user_model()
+        username = os.getenv("DJANGO_SUPERUSER_USERNAME", "admin")
+        email = os.getenv("DJANGO_SUPERUSER_EMAIL", "chukseo@gmail.com")
+        password = os.getenv("DJANGO_SUPERUSER_PASSWORD", "Brownweb87")
+
+        if not User.objects.filter(username=username).exists():
+            User.objects.create_superuser(username=username, email=email, password=password)
+            self.stdout.write(self.style.SUCCESS(f"Superuser {username} created"))
+        else:
+            self.stdout.write(self.style.WARNING(f"Superuser {username} already exists"))
+
 
 load_dotenv()
 
@@ -96,7 +114,6 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Media files (use an object storage in production for durability)
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
@@ -126,7 +143,12 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4000",
+    "http://localhost:5173",
     "https://mejhpgs.netlify.app",
+    "https://juvejournalimsu.netlify.app",
+    "https://odeeokaaimsu.netlify.app",
+    "https://kpakpandoimsu.netlify.app",
+    "https://ugtfjournal.netlify.app",
 ]
 
 

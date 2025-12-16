@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Journal, Issue, Author, Article
 
+
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Author
@@ -9,7 +10,8 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 class ArticleSerializer(serializers.ModelSerializer):
     authors = AuthorSerializer(many=True, read_only=True)
-    pdf_url = serializers.SerializerMethodField()
+    # expose pdf_file as pdf_url for consistency in API response
+    pdf_url = serializers.CharField(source="pdf_file", read_only=True)
 
     class Meta:
         model = Article
@@ -22,12 +24,6 @@ class ArticleSerializer(serializers.ModelSerializer):
             "authors",
             "issue",
         ]
-
-    def get_pdf_url(self, obj):
-        request = self.context.get("request")
-        if obj.pdf_file and hasattr(obj.pdf_file, "url"):
-            return request.build_absolute_uri(obj.pdf_file.url) if request else obj.pdf_file.url
-        return None
 
 
 class IssueSerializer(serializers.ModelSerializer):
@@ -56,7 +52,7 @@ class JournalSerializer(serializers.ModelSerializer):
 
 class ArticleDetailSerializer(serializers.ModelSerializer):
     authors = AuthorSerializer(many=True, read_only=True)
-    pdf_url = serializers.SerializerMethodField()
+    pdf_url = serializers.CharField(source="pdf_file", read_only=True)
     issue = IssueSerializer(read_only=True)
 
     class Meta:
@@ -72,35 +68,30 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
-        class IssueDetailSerializer(serializers.ModelSerializer):
-            journal = JournalSerializer(read_only=True)
-            image_url = serializers.SerializerMethodField()
-            articles = ArticleSerializer(many=True, read_only=True)
-            article_count = serializers.IntegerField(source="articles.count", read_only=True)
 
-            class Meta:
-                model = Issue
-                fields = [
-                    "id",
-                    "title",
-                    "year",
-                    "journal",
-                    "image_url",
-                    "article_count",
-                    "articles",
-                    "created_at",
-                    "updated_at",
-                ]
 
-            def get_image_url(self, obj):
-                request = self.context.get("request")
-                if obj.image and hasattr(obj.image, "url"):
-                    return request.build_absolute_uri(obj.image.url) if request else obj.image.url
-                return None
-            
-            
-    def get_pdf_url(self, obj):
+class IssueDetailSerializer(serializers.ModelSerializer):
+    journal = JournalSerializer(read_only=True)
+    image_url = serializers.SerializerMethodField()
+    articles = ArticleSerializer(many=True, read_only=True)
+    article_count = serializers.IntegerField(source="articles.count", read_only=True)
+
+    class Meta:
+        model = Issue
+        fields = [
+            "id",
+            "title",
+            "year",
+            "journal",
+            "image_url",
+            "article_count",
+            "articles",
+            "created_at",
+            "updated_at",
+        ]
+
+    def get_image_url(self, obj):
         request = self.context.get("request")
-        if obj.pdf_file and hasattr(obj.pdf_file, "url"):
-            return request.build_absolute_uri(obj.pdf_file.url) if request else obj.pdf_file.url
+        if obj.image and hasattr(obj.image, "url"):
+            return request.build_absolute_uri(obj.image.url) if request else obj.image.url
         return None
